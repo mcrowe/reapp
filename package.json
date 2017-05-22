@@ -1,0 +1,24 @@
+{
+  "name": "@mcrowe/reapp",
+  "version": "0.0.0",
+  "description": "Simple app development framework on top of React",
+  "author": "Mitch Crowe <code@mitchcrowe.com> (http://www.mitchcrowe.com)",
+  "license": "ISC",
+  "repository": "https://github.com/mcrowe/reapp",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -u qunit --recursive -r ./node_modules/ts-node/register test/*",
+    "build": "./node_modules/typescript/bin/tsc"
+  },
+  "main": "lib/index.js",
+  "typings": "lib/index",
+  "files": [
+    "lib/"
+  ],
+  "devDependencies": {
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.12",
+    "mocha": "^3.2.0",
+    "ts-node": "^2.1.0",
+    "typescript": "^2.1.4"
+  }
+}
