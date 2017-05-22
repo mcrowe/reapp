@@ -28,9 +28,9 @@ export default class Router<T> {
   handlers: IHandlerMap<T>
   routes: IRoute[]
 
-  constructor() {
+  constructor(initialRoute: IRoute) {
     this.handlers = {}
-    this.routes = []
+    this.routes = [initialRoute]
   }
 
   route(path: string, component: IComponent, getProps?: IGetProps<T>) {
