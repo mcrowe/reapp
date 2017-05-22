@@ -16,7 +16,7 @@ export interface IRoute {
 export default class Router<T> {
     handlers: IHandlerMap<T>;
     routes: IRoute[];
-    constructor();
+    constructor(initialRoute: IRoute);
     route(path: string, component: IComponent, getProps?: IGetProps<T>): void;
     renderScene(session: T): React.ComponentElement<any, React.Component<any, React.ComponentState>>;
     push(route: IRoute): void;
