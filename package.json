@@ -1,6 +1,6 @@
 {
   "name": "@mcrowe/reapp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple app development framework on top of React",
   "author": "Mitch Crowe <code@mitchcrowe.com> (http://www.mitchcrowe.com)",
   "license": "ISC",
@@ -30,6 +30,6 @@
     "react-dom": "^15.x"
   },
   "dependencies": {
-    "@mcrowe/tss": "0.0.4"
+    "@mcrowe/tss": "0.0.5"
   }
 }
