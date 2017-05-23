@@ -11,10 +11,10 @@ export interface IProps<T> {
 
 export default class App<T> extends React.Component<IProps<T>, T> {
 
-  constructor() {
-    super()
-    this.state = this.props.store.get()
-    this.props.store.subscribe(v => this.setState(v))
+  constructor(props) {
+    super(props)
+    this.state = props.store.get()
+    props.store.subscribe(v => this.setState(v))
   }
 
   render() {
