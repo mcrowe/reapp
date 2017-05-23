@@ -1,6 +1,5 @@
 import React = require('react')
 import ReactDOM = require('react-dom')
-import StyleSheet from '@mcrowe/tss'
 import App from './app'
 import Router from './router'
 import Store from './store'
@@ -14,7 +13,6 @@ function createApp<T>(router: Router<T>, store: Store<T>) {
 
 
 export default {
-  StyleSheet,
   Router,
   Store,
   createApp

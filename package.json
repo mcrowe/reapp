@@ -29,7 +29,5 @@
     "react": "^15.x",
     "react-dom": "^15.x"
   },
-  "dependencies": {
-    "@mcrowe/tss": "0.0.5"
-  }
+  "dependencies": {}
 }
