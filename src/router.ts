@@ -40,7 +40,13 @@ export default class Router<T> {
   renderScene(session: T) {
     const route = this.getCurrentRoute()
     const handler = this.resolve(route)
-    const props = handler.getProps(session)
+
+    let props = {}
+
+    if (typeof handler.getProps == 'function') {
+      props = handler.getProps(session)
+    }
+
     return React.createElement(handler.component, props)
   }
 
