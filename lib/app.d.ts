@@ -7,6 +7,6 @@ export interface IProps<T> {
     store: Store<T>;
 }
 export default class App<T> extends React.Component<IProps<T>, T> {
-    constructor();
+    constructor(props: any);
     render(): React.ComponentElement<any, React.Component<any, React.ComponentState>>;
 }
