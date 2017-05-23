@@ -1,7 +1,9 @@
 import React = require('react')
+import Channel from './channel'
+import { IRoute } from './types'
 
 
-export type IGetProps<T> = (params: object, session: T) => object
+export type IGetProps<T> = (params: any, session: T) => object
 
 export type IComponent = React.ComponentClass<any>
 
@@ -17,16 +19,11 @@ export interface IHandlerMap<T> {
 }
 
 
-export interface IRoute {
-  path: string
-  params: object
-}
-
-
 export default class Router<T> {
 
   handlers: IHandlerMap<T>
   routes: IRoute[]
+  private channel: Channel
 
   constructor(initialRoute: IRoute) {
     this.handlers = {}
@@ -54,16 +51,19 @@ export default class Router<T> {
   push(path: string, params: object) {
     const route = this.makeRoute(path, params)
     this.routes.push(route)
+    this.broadcast()
   }
 
   replace(path: string, params: object) {
     const route = this.makeRoute(path, params)
     this.routes[this.routes.length - 1] = route
+    this.broadcast()
   }
 
   pop() {
     if (this.routes.length > 1) {
       this.routes.pop()
+      this.broadcast()
     }
   }
 
@@ -83,6 +83,10 @@ export default class Router<T> {
     return { path, params }
   }
 
+  subscribe(fn: Function) {
+    return this.channel.subscribe(fn)
+  }
+
   private resolve(route: IRoute): IHandler<T> {
     const handler = this.handlers[route.path]
 
@@ -91,6 +95,10 @@ export default class Router<T> {
     }
 
     return handler
+  }
+
+  private broadcast() {
+    this.channel.broadcast(this.routes)
   }
 
 }

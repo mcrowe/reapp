@@ -3,8 +3,8 @@ import Channel from './channel'
 
 class Store<T> {
 
-  value: T
-  channel: Channel
+  private value: T
+  private channel: Channel
 
   constructor(initialValue: T) {
     this.value = initialValue

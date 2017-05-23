@@ -1,7 +1,6 @@
-import Channel from './channel';
 declare class Store<T> {
-    value: T;
-    channel: Channel;
+    private value;
+    private channel;
     constructor(initialValue: T);
     get(): T;
     set(): void;

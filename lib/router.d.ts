@@ -1,6 +1,7 @@
 /// <reference types="react" />
 import React = require('react');
-export declare type IGetProps<T> = (params: object, session: T) => object;
+import { IRoute } from './types';
+export declare type IGetProps<T> = (params: any, session: T) => object;
 export declare type IComponent = React.ComponentClass<any>;
 export interface IHandler<T> {
     component: IComponent;
@@ -9,13 +10,10 @@ export interface IHandler<T> {
 export interface IHandlerMap<T> {
     [path: string]: IHandler<T>;
 }
-export interface IRoute {
-    path: string;
-    params: object;
-}
 export default class Router<T> {
     handlers: IHandlerMap<T>;
     routes: IRoute[];
+    private channel;
     constructor(initialRoute: IRoute);
     route(path: string, component: IComponent, getProps?: IGetProps<T>): this;
     renderScene(session: T): React.ComponentElement<any, React.Component<any, React.ComponentState>>;
@@ -29,5 +27,7 @@ export default class Router<T> {
         path: string;
         params: object;
     };
+    subscribe(fn: Function): () => void;
     private resolve(route);
+    private broadcast();
 }
