@@ -28,6 +28,7 @@ export default class Router<T> {
   constructor(initialRoute: IRoute) {
     this.handlers = {}
     this.routes = [initialRoute]
+    this.channel = new Channel()
   }
 
   route(path: string, component: IComponent, getProps?: IGetProps<T>) {
