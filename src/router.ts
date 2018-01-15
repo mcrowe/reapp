@@ -8,45 +8,33 @@ export type IGetProps<T> = (params: any, session: T) => object
 export type IComponent = React.ComponentClass<any>
 
 
-export interface IHandler<T> {
-  component: IComponent,
-  getProps?: IGetProps<T>
-}
 
-
-export interface IHandlerMap<T> {
-  [path: string]: IHandler<T>
+export interface IComponentMap<T> {
+  [path: string]: IComponent
 }
 
 
 export default class Router<T> {
 
-  handlers: IHandlerMap<T>
+  map: IComponentMap<T>
   routes: IRoute[]
   private channel: Channel
 
   constructor(initialRoute: IRoute) {
-    this.handlers = {}
+    this.map = {}
     this.routes = [initialRoute]
     this.channel = new Channel()
   }
 
-  route(path: string, component: IComponent, getProps?: IGetProps<T>) {
-    this.handlers[path] = { component, getProps }
+  route(path: string, component: IComponent) {
+    this.map[path] = component
     return this
   }
 
   renderScene(session: T) {
     const route = this.getCurrentRoute()
-    const handler = this.resolve(route)
-
-    let props = {}
-
-    if (typeof handler.getProps == 'function') {
-      props = handler.getProps(route.params, session)
-    }
-
-    return React.createElement(handler.component, props)
+    const comp = this.resolve(route)
+    return React.createElement(comp, route.params)
   }
 
   push(path: string, params: object) {
@@ -88,14 +76,14 @@ export default class Router<T> {
     return this.channel.subscribe(fn)
   }
 
-  private resolve(route: IRoute): IHandler<T> {
-    const handler = this.handlers[route.path]
+  private resolve(route: IRoute): IComponent {
+    const comp = this.map[route.path]
 
-    if (!handler) {
+    if (!comp) {
       throw new Error(`Missing handler for route ${JSON.stringify(route)}`)
     }
 
-    return handler
+    return comp
   }
 
   private broadcast() {

@@ -3,19 +3,15 @@ import React = require('react');
 import { IRoute } from './types';
 export declare type IGetProps<T> = (params: any, session: T) => object;
 export declare type IComponent = React.ComponentClass<any>;
-export interface IHandler<T> {
-    component: IComponent;
-    getProps?: IGetProps<T>;
-}
-export interface IHandlerMap<T> {
-    [path: string]: IHandler<T>;
+export interface IComponentMap<T> {
+    [path: string]: IComponent;
 }
 export default class Router<T> {
-    handlers: IHandlerMap<T>;
+    map: IComponentMap<T>;
     routes: IRoute[];
     private channel;
     constructor(initialRoute: IRoute);
-    route(path: string, component: IComponent, getProps?: IGetProps<T>): this;
+    route(path: string, component: IComponent): this;
     renderScene(session: T): React.ComponentElement<any, React.Component<any, React.ComponentState>>;
     push(path: string, params: object): void;
     replace(path: string, params: object): void;
