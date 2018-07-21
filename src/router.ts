@@ -13,12 +13,9 @@ export interface IComponentMap {
 
 
 function makeNotFound(route: IRoute) {
-  return class NotFound extends React.Component<{
-    route: IRoute
-  }> {
+  return class NotFound extends React.Component {
 
     render() {
-      const { route } = this.props
       return React.createElement('h1', `Route not found ${JSON.stringify(route)}`)
     }
 
