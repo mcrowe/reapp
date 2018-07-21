@@ -11,6 +11,21 @@ export interface IComponentMap {
 }
 
 
+
+function makeNotFound(route: IRoute) {
+  return class NotFound extends React.Component<{
+    route: IRoute
+  }> {
+
+    render() {
+      const { route } = this.props
+      return React.createElement('h1', `Route not found ${JSON.stringify(route)}`)
+    }
+
+  }
+}
+
+
 export default class Router implements ISubscribable {
 
   private routes: IRoute[]
@@ -32,17 +47,20 @@ export default class Router implements ISubscribable {
     return React.createElement(comp, route.params)
   }
 
-  push(path: string, params: object) {
+  push(path: string, params: object = {}) {
     const route = this.makeRoute(path, params)
     this.routes.push(route)
     this.broadcast()
   }
 
-  replace(path: string, params: object) {
+  replace(path: string, params: object = {}) {
     const route = this.makeRoute(path, params)
     this.routes[this.routes.length - 1] = route
     this.broadcast()
   }
+
+  // Alias for go
+  go = this.replace
 
   pop() {
     if (this.routes.length > 1) {
@@ -60,11 +78,12 @@ export default class Router implements ISubscribable {
   private resolve(route: IRoute): IComponent {
     const comp = this.map[route.path]
 
-    if (!comp) {
-      throw new Error(`Missing handler for route ${JSON.stringify(route)}`)
+    if (comp) {
+      return comp
+    } else {
+      console.error(`Missing handler for route ${JSON.stringify(route)}`)
+      return makeNotFound(route)
     }
-
-    return comp
   }
 
   private makeRoute(path: string, params: object) {
