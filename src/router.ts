@@ -42,7 +42,9 @@ export default class Router implements ISubscribable {
     return React.createElement(comp, route.params)
   }
 
-  subscribe = this.navigator.subscribe
+  subscribe(fn: () => void) {
+    return this.navigator.subscribe(fn)
+  }
 
   private resolve(route: IRoute): IComponent {
     const comp = this.map[route.path]

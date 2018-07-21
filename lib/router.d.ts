@@ -8,6 +8,6 @@ export default class Router implements ISubscribable {
     getNavigator(): Navigator;
     register(map: IComponentMap): void;
     renderScene(): React.ReactElement<any>;
-    subscribe: (fn: () => void) => () => void;
+    subscribe(fn: () => void): () => void;
     private resolve;
 }
