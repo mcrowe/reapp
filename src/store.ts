@@ -15,7 +15,10 @@ export default class Store<T> implements ISubscribable {
     return this.value
   }
 
-  set() {
+  set(value?: T) {
+    if (typeof value != 'undefined') {
+      this.value = value
+    }
     this.channel.broadcast()
   }
 
