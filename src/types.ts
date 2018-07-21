@@ -10,3 +10,11 @@ export interface ISubscribable {
 
 
 export type ICallable = () => void
+
+
+export type IComponent = React.ComponentType<any>
+
+
+export interface IComponentMap {
+  [path: string]: IComponent
+}

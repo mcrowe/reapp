@@ -1,9 +1,9 @@
 import { test } from 'ava'
-import Router from '../router'
+import Navigator from '../navigator'
 
 
 test('router', t => {
-  const router = new Router({path: 'home', params: {}})
+  const router = new Navigator({path: 'home', params: {}})
 
   router.push('page', {})
 

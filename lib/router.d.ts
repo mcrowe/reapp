@@ -1,24 +1,13 @@
 import * as React from 'react';
-import { IRoute, ISubscribable } from './types';
-declare type IComponent = React.ComponentType<any>;
-export interface IComponentMap {
-    [path: string]: IComponent;
-}
+import Navigator from './navigator';
+import { IRoute, ISubscribable, IComponentMap } from './types';
 export default class Router implements ISubscribable {
-    private routes;
     private map;
-    private channel;
+    private navigator;
     constructor(initialRoute: IRoute);
-    route(path: string, component: IComponent): this;
+    getNavigator(): Navigator;
+    register(map: IComponentMap): void;
     renderScene(): React.ReactElement<any>;
-    push(path: string, params?: object): void;
-    replace(path: string, params?: object): void;
-    go: (path: string, params?: object) => void;
-    pop(): void;
-    getCurrentRoute(): IRoute;
     subscribe: (fn: () => void) => () => void;
     private resolve;
-    private makeRoute;
-    private broadcast;
 }
-export {};
