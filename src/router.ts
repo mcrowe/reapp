@@ -16,7 +16,7 @@ function makeNotFound(route: IRoute) {
   return class NotFound extends React.Component {
 
     render() {
-      return React.createElement('h1', `Route not found ${JSON.stringify(route)}`)
+      return React.createElement('h1', null, `Route not found ${JSON.stringify(route)}`)
     }
 
   }
