@@ -1,8 +1,3 @@
-import Router from './router';
-import Store from './store';
-declare var _default: {
-    Router: typeof Router;
-    Store: typeof Store;
-    createApp: <T>(router: Router<T>, store: Store<T>) => void;
-};
-export default _default;
+export { default as Router } from './router';
+export { default as Store } from './store';
+export { default as subscribe } from './subscribe';

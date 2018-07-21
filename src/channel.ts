@@ -1,20 +1,12 @@
-function pull<T>(xs: T[], x: T) {
-  const idx = xs.indexOf(x)
-  if (idx > -1) {
-    xs.splice(idx, 1)
-  }
-}
+import { ISubscribable, ICallable } from './types'
+import { pull } from './util'
 
 
-class Channel {
+export default class Channel implements ISubscribable {
 
-  listeners: Function[]
+  listeners: ICallable[] = []
 
-  constructor() {
-    this.listeners = []
-  }
-
-  subscribe(fn: Function) {
+  subscribe = (fn: () => void) => {
     this.listeners.push(fn)
 
     // Return an unsubscribe function.
@@ -23,13 +15,10 @@ class Channel {
     }
   }
 
-  broadcast(val?) {
-    this.listeners.forEach(fn => {
-      fn(val)
-    })
+  broadcast = () => {
+    for (const listener of this.listeners) {
+      listener()
+    }
   }
 
 }
-
-
-export default Channel

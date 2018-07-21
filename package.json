@@ -1,33 +1,38 @@
 {
   "name": "@mcrowe/reapp",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Simple app development framework on top of React",
   "author": "Mitch Crowe <code@mitchcrowe.com> (http://www.mitchcrowe.com)",
   "license": "ISC",
   "repository": "https://github.com/mcrowe/reapp",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -u qunit --recursive -r ./node_modules/ts-node/register test/*",
-    "build": "./node_modules/typescript/bin/tsc"
+    "build": "tsc",
+    "test": "ava",
+    "watch": "tsc -w"
   },
   "main": "lib/index.js",
   "typings": "lib/index",
   "files": [
     "lib/"
   ],
+  "dependencies": {},
   "devDependencies": {
-    "@types/mocha": "^2.2.39",
-    "@types/node": "^7.0.12",
-    "@types/react": "^15.0.23",
-    "@types/react-dom": "^15.5.0",
-    "mocha": "^3.2.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "ts-node": "^2.1.0",
-    "typescript": "^2.1.4"
+    "@types/node": "^10.5.2",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "ava": "^0.25.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "typescript": "^2.9.2"
   },
   "peerDependencies": {
-    "react": ">15.x",
-    "react-dom": ">15.x"
+    "react": ">16.x",
+    "react-dom": ">16.x"
   },
-  "dependencies": {}
+  "ava": {
+    "files": [
+      "lib/**/*.test.js"
+    ],
+    "verbose": true
+  }
 }

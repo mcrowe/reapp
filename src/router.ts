@@ -1,29 +1,24 @@
-import React = require('react')
+import * as React from 'react'
 import Channel from './channel'
-import { IRoute } from './types'
+import { IRoute, ISubscribable } from './types'
 
 
-export type IGetProps<T> = (params: any, session: T) => object
-
-export type IComponent = React.ComponentClass<any>
+type IComponent = React.ComponentType<any>
 
 
-
-export interface IComponentMap<T> {
+export interface IComponentMap {
   [path: string]: IComponent
 }
 
 
-export default class Router<T> {
+export default class Router implements ISubscribable {
 
-  map: IComponentMap<T>
-  routes: IRoute[]
-  private channel: Channel
+  private routes: IRoute[]
+  private map: IComponentMap = {}
+  private channel: Channel = new Channel()
 
   constructor(initialRoute: IRoute) {
-    this.map = {}
     this.routes = [initialRoute]
-    this.channel = new Channel()
   }
 
   route(path: string, component: IComponent) {
@@ -31,7 +26,7 @@ export default class Router<T> {
     return this
   }
 
-  renderScene(session: T) {
+  renderScene() {
     const route = this.getCurrentRoute()
     const comp = this.resolve(route)
     return React.createElement(comp, route.params)
@@ -56,25 +51,11 @@ export default class Router<T> {
     }
   }
 
-  pusher(path: string, params: object) {
-    return () => this.push(path, params)
-  }
-
-  popper() {
-    return () => this.pop()
-  }
-
   getCurrentRoute(): IRoute {
     return this.routes[this.routes.length - 1]
   }
 
-  makeRoute(path: string, params: object) {
-    return { path, params }
-  }
-
-  subscribe(fn: Function) {
-    return this.channel.subscribe(fn)
-  }
+  subscribe = this.channel.subscribe
 
   private resolve(route: IRoute): IComponent {
     const comp = this.map[route.path]
@@ -86,8 +67,12 @@ export default class Router<T> {
     return comp
   }
 
+  private makeRoute(path: string, params: object) {
+    return { path, params }
+  }
+
   private broadcast() {
-    this.channel.broadcast(this.routes)
+    this.channel.broadcast()
   }
 
 }

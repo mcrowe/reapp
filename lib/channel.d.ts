@@ -1,7 +1,6 @@
-declare class Channel {
-    listeners: Function[];
-    constructor();
-    subscribe(fn: Function): () => void;
-    broadcast(val?: any): void;
+import { ISubscribable, ICallable } from './types';
+export default class Channel implements ISubscribable {
+    listeners: ICallable[];
+    subscribe: (fn: () => void) => () => void;
+    broadcast: () => void;
 }
-export default Channel;

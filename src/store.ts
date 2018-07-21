@@ -1,14 +1,14 @@
 import Channel from './channel'
+import { ISubscribable } from './types'
 
 
-class Store<T> {
+export default class Store<T> implements ISubscribable {
 
   private value: T
-  private channel: Channel
+  private channel = new Channel()
 
   constructor(initialValue: T) {
     this.value = initialValue
-    this.channel = new Channel()
   }
 
   get(): T {
@@ -16,7 +16,7 @@ class Store<T> {
   }
 
   set() {
-    this.channel.broadcast(this.value)
+    this.channel.broadcast()
   }
 
   update(fn: (value: T) => void) {
@@ -24,11 +24,6 @@ class Store<T> {
     this.set()
   }
 
-  subscribe(fn: Function) {
-    return this.channel.subscribe(fn)
-  }
+  subscribe = this.channel.subscribe
 
 }
-
-
-export default Store
