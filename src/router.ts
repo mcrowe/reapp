@@ -36,7 +36,7 @@ export default class Router implements ISubscribable {
     this.map = map
   }
 
-  renderScene(props: object) {
+  renderScene(props: object = {}) {
     const route = this.navigator.getCurrentRoute()
     const comp = this.resolve(route)
     return React.createElement(comp, {...props, params: route.params})

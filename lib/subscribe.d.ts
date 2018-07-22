@@ -1,58 +1,58 @@
 import * as React from 'react';
 import { ISubscribable, ICallable } from './types';
-export default function subscribe(...subscriptions: ISubscribable[]): (WrappedComponent: React.ComponentType<{}>) => {
-    new (props: Readonly<{}>): {
+export default function subscribe<T>(...subscriptions: ISubscribable[]): (WrappedComponent: React.ComponentType<T>) => {
+    new (props: Readonly<T>): {
         unsubscribes: ICallable[];
         componentWillMount(): void;
         componentWillUnmount(): void;
         reload: () => void;
-        render(): React.ReactElement<{}>;
-        setState<K extends never>(state: {} | ((prevState: Readonly<{}>, props: Readonly<{}>) => {} | Pick<{}, K>) | Pick<{}, K>, callback?: () => void): void;
+        render(): React.ReactElement<T>;
+        setState<K extends never>(state: {} | ((prevState: Readonly<{}>, props: Readonly<T>) => {} | Pick<{}, K>) | Pick<{}, K>, callback?: () => void): void;
         forceUpdate(callBack?: () => void): void;
         readonly props: Readonly<{
             children?: React.ReactNode;
-        }> & Readonly<{}>;
+        }> & Readonly<T>;
         state: Readonly<{}>;
         context: any;
         refs: {
             [key: string]: React.ReactInstance;
         };
         componentDidMount?(): void;
-        shouldComponentUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean;
+        shouldComponentUpdate?(nextProps: Readonly<T>, nextState: Readonly<{}>, nextContext: any): boolean;
         componentDidCatch?(error: Error, errorInfo: React.ErrorInfo): void;
-        getSnapshotBeforeUpdate?(prevProps: Readonly<{}>, prevState: Readonly<{}>): any;
-        componentDidUpdate?(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void;
+        getSnapshotBeforeUpdate?(prevProps: Readonly<T>, prevState: Readonly<{}>): any;
+        componentDidUpdate?(prevProps: Readonly<T>, prevState: Readonly<{}>, snapshot?: any): void;
         UNSAFE_componentWillMount?(): void;
-        componentWillReceiveProps?(nextProps: Readonly<{}>, nextContext: any): void;
-        UNSAFE_componentWillReceiveProps?(nextProps: Readonly<{}>, nextContext: any): void;
-        componentWillUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): void;
-        UNSAFE_componentWillUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): void;
+        componentWillReceiveProps?(nextProps: Readonly<T>, nextContext: any): void;
+        UNSAFE_componentWillReceiveProps?(nextProps: Readonly<T>, nextContext: any): void;
+        componentWillUpdate?(nextProps: Readonly<T>, nextState: Readonly<{}>, nextContext: any): void;
+        UNSAFE_componentWillUpdate?(nextProps: Readonly<T>, nextState: Readonly<{}>, nextContext: any): void;
     };
-    new (props: {}, context?: any): {
+    new (props: T, context?: any): {
         unsubscribes: ICallable[];
         componentWillMount(): void;
         componentWillUnmount(): void;
         reload: () => void;
-        render(): React.ReactElement<{}>;
-        setState<K extends never>(state: {} | ((prevState: Readonly<{}>, props: Readonly<{}>) => {} | Pick<{}, K>) | Pick<{}, K>, callback?: () => void): void;
+        render(): React.ReactElement<T>;
+        setState<K extends never>(state: {} | ((prevState: Readonly<{}>, props: Readonly<T>) => {} | Pick<{}, K>) | Pick<{}, K>, callback?: () => void): void;
         forceUpdate(callBack?: () => void): void;
         readonly props: Readonly<{
             children?: React.ReactNode;
-        }> & Readonly<{}>;
+        }> & Readonly<T>;
         state: Readonly<{}>;
         context: any;
         refs: {
             [key: string]: React.ReactInstance;
         };
         componentDidMount?(): void;
-        shouldComponentUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean;
+        shouldComponentUpdate?(nextProps: Readonly<T>, nextState: Readonly<{}>, nextContext: any): boolean;
         componentDidCatch?(error: Error, errorInfo: React.ErrorInfo): void;
-        getSnapshotBeforeUpdate?(prevProps: Readonly<{}>, prevState: Readonly<{}>): any;
-        componentDidUpdate?(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void;
+        getSnapshotBeforeUpdate?(prevProps: Readonly<T>, prevState: Readonly<{}>): any;
+        componentDidUpdate?(prevProps: Readonly<T>, prevState: Readonly<{}>, snapshot?: any): void;
         UNSAFE_componentWillMount?(): void;
-        componentWillReceiveProps?(nextProps: Readonly<{}>, nextContext: any): void;
-        UNSAFE_componentWillReceiveProps?(nextProps: Readonly<{}>, nextContext: any): void;
-        componentWillUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): void;
-        UNSAFE_componentWillUpdate?(nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): void;
+        componentWillReceiveProps?(nextProps: Readonly<T>, nextContext: any): void;
+        UNSAFE_componentWillReceiveProps?(nextProps: Readonly<T>, nextContext: any): void;
+        componentWillUpdate?(nextProps: Readonly<T>, nextState: Readonly<{}>, nextContext: any): void;
+        UNSAFE_componentWillUpdate?(nextProps: Readonly<T>, nextState: Readonly<{}>, nextContext: any): void;
     };
 };

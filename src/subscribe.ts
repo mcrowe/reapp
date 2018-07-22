@@ -2,9 +2,9 @@ import * as React from 'react'
 import { ISubscribable, ICallable } from './types'
 
 
-export default function subscribe(...subscriptions: ISubscribable[]) {
-  return function (WrappedComponent: React.ComponentType) {
-    return class SubscribedComponent extends React.Component {
+export default function subscribe<T>(...subscriptions: ISubscribable[]) {
+  return function (WrappedComponent: React.ComponentType<T>) {
+    return class SubscribedComponent extends React.Component<T> {
 
       unsubscribes: ICallable[] = []
 
@@ -25,7 +25,7 @@ export default function subscribe(...subscriptions: ISubscribable[]) {
       }
 
       render() {
-        return React.createElement(WrappedComponent)
+        return React.createElement(WrappedComponent, this.props)
       }
 
     }
