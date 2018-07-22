@@ -2,8 +2,8 @@ import * as React from 'react'
 import { ISubscribable, ICallable } from './types'
 
 
-export default function subscribe<T>(...subscriptions: ISubscribable[]) {
-  return function (WrappedComponent: React.ComponentType<T>) {
+export default function subscribe(...subscriptions: ISubscribable[]) {
+  return function wrap<T>(WrappedComponent: React.ComponentType<T>) {
     return class SubscribedComponent extends React.Component<T> {
 
       unsubscribes: ICallable[] = []

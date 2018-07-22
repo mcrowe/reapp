@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ISubscribable, ICallable } from './types';
-export default function subscribe<T>(...subscriptions: ISubscribable[]): (WrappedComponent: React.ComponentType<T>) => {
+export default function subscribe(...subscriptions: ISubscribable[]): <T>(WrappedComponent: React.ComponentType<T>) => {
     new (props: Readonly<T>): {
         unsubscribes: ICallable[];
         componentWillMount(): void;
