@@ -1,12 +1,13 @@
 {
-  "name": "@mcrowe/reapp",
-  "version": "0.3.1",
-  "description": "Simple app development framework on top of React",
+  "name": "@mcrowe/typerouter",
+  "version": "0.0.1",
+  "description": "Typesafe router for TypeScript",
   "author": "Mitch Crowe <code@mitchcrowe.com> (http://www.mitchcrowe.com)",
   "license": "ISC",
   "repository": "https://github.com/mcrowe/reapp",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --list-different --write \"src/**/*\"",
     "test": "ava",
     "watch": "tsc -w"
   },
@@ -21,6 +22,7 @@
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
     "ava": "^0.25.0",
+    "prettier": "1.14.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "typescript": "^2.9.2"
@@ -34,5 +36,11 @@
       "lib/**/*.test.js"
     ],
     "verbose": true
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "semi": false,
+    "printWidth": 80
   }
 }

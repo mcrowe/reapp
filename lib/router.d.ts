@@ -1,13 +1,18 @@
 import * as React from 'react';
-import Navigator from './navigator';
-import { IRoute, ISubscribable, IComponentMap } from './types';
-export default class Router implements ISubscribable {
-    private map;
-    private navigator;
-    constructor(initialRoute: IRoute);
-    getNavigator(): Navigator;
-    register(map: IComponentMap): void;
-    renderScene(props?: object): React.ReactElement<any>;
-    subscribe(fn: () => void): () => void;
-    private resolve;
+import { INavigator, IRoute, IRouteMap } from './types';
+interface IProps<T extends IRouteMap> {
+    initialRoute: IRoute;
+    routes: T;
+    getSceneProps: (nav: any) => object;
 }
+interface IState {
+    currentRoute: IRoute;
+}
+export default class Router<T extends IRouteMap> extends React.Component<IProps<T>, IState> {
+    constructor(props: IProps<T>);
+    go: (path: string, params?: object) => void;
+    makeRoute(path: string, params: object): IRoute;
+    getNavigator(): INavigator;
+    render(): React.ReactElement<{}>;
+}
+export {};

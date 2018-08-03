@@ -1,60 +1,58 @@
 import * as React from 'react'
-import Navigator from './navigator'
-import {
-  IRoute,
-  ISubscribable,
-  IComponentMap,
-  IComponent
-} from './types'
+import { INavigator, IRoute, IRouteMap } from './types'
 
-
-function makeNotFound(route: IRoute) {
-  return class NotFound extends React.Component {
-
-    render() {
-      return React.createElement('h1', null, `Route not found ${JSON.stringify(route)}`)
-    }
-
-  }
+interface IProps<T extends IRouteMap> {
+  initialRoute: IRoute
+  routes: T
+  getSceneProps: (nav: any) => object
 }
 
+interface IState {
+  currentRoute: IRoute
+}
 
-export default class Router implements ISubscribable {
+export default class Router<T extends IRouteMap> extends React.Component<
+  IProps<T>,
+  IState
+> {
+  constructor(props: IProps<T>) {
+    super(props)
 
-  private map: IComponentMap = {}
-  private navigator: Navigator
-
-  constructor(initialRoute: IRoute) {
-    this.navigator = new Navigator(initialRoute)
-  }
-
-  getNavigator() {
-    return this.navigator
-  }
-
-  register(map: IComponentMap) {
-    this.map = map
-  }
-
-  renderScene(props: object = {}) {
-    const route = this.navigator.getCurrentRoute()
-    const comp = this.resolve(route)
-    return React.createElement(comp, {...props, params: route.params})
-  }
-
-  subscribe(fn: () => void) {
-    return this.navigator.subscribe(fn)
-  }
-
-  private resolve(route: IRoute): IComponent {
-    const comp = this.map[route.path]
-
-    if (comp) {
-      return comp
-    } else {
-      console.error(`Missing handler for route ${JSON.stringify(route)}`)
-      return makeNotFound(route)
+    this.state = {
+      currentRoute: props.initialRoute
     }
   }
 
+  go = (path: string, params: object = {}) => {
+    const route = this.makeRoute(path, params)
+    this.setState({ currentRoute: route })
+  }
+
+  makeRoute(path: string, params: object): IRoute {
+    return { path, params }
+  }
+
+  getNavigator(): INavigator {
+    return {
+      go: this.go
+    }
+  }
+
+  render() {
+    const { routes, getSceneProps } = this.props
+    const { currentRoute } = this.state
+
+    const component = routes[currentRoute.path]
+
+    if (!component) {
+      throw new Error(`Route not found ${currentRoute.path}.`)
+    }
+
+    const props = {
+      ...getSceneProps(this.getNavigator()),
+      params: { ...currentRoute.params }
+    } as any
+
+    return React.createElement(component, props)
+  }
 }

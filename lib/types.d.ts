@@ -1,13 +1,11 @@
 /// <reference types="react" />
+export interface INavigator {
+    go(path: string, params?: object): void;
+}
 export interface IRoute {
     path: string;
     params: object;
 }
-export interface ISubscribable {
-    subscribe(fn: () => void): () => void;
-}
-export declare type ICallable = () => void;
-export declare type IComponent = React.ComponentType<any>;
-export interface IComponentMap {
-    [path: string]: IComponent;
+export interface IRouteMap {
+    [path: string]: React.ComponentType;
 }
